@@ -85,5 +85,14 @@ h1 {
 		color: #b5b5b5 !important;
 		text-decoration: none;
 	}
-
+	
+	a {
+		color: #6d6d6d !important;
+        text-decoration: none;
+	}
+	
+	a:hover {
+		color: #b5b5b5;
+	}
+    
 }
