@@ -5,7 +5,7 @@
     $config = array();
 
 	$config['project_name'] = 'arcader';
-	$config['project_domain'] = 'spacemy.xyz';
+	$config['project_domain'] = $_SERVER['HTTP_HOST'];
 	$config['project_owner'] = 'tydentlor';
 	$config['project_discord'] = 'https://discord.gg/WjYeQNd';
 	
