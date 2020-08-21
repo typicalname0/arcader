@@ -1,6 +1,6 @@
 body {
 	padding-top: 2em;
-	background: url("../img/bg_top.png") repeat-x;
+	background: linear-gradient(#fefefe,#dccd7f87), url(../img/diag_stripe_grey1.png)
 	font-family: Trebuchet MS, Verdana, Arial, sans-serif;
 	background-size: contain;
 }
