@@ -1,8 +1,7 @@
 body {
 	padding-top: 2em;
-	background: linear-gradient(#fefefe,#dccd7f87), url(../img/diag_stripe_grey1.png)
+	background: linear-gradient(#fefefe,#dccd7f87), url(../img/diag_stripe_grey1.png);
 	font-family: Trebuchet MS, Verdana, Arial, sans-serif;
-	background-size: contain;
 }
 
 html {
@@ -62,37 +61,17 @@ h1 {
 	text-decoration: underline;
 }
 
-@media (prefers-color-scheme: dark) {
-		.headline {
-		background-color: #26213c;
-	}
+#rightFooterCustom {
+	padding-top: 9px;
+	padding-right: 5px;
+	float: right;
+	vertical-align: middle;
+}
 
-	.container {
-		background-color: #2b2b2b;
-		color: #dadada;
-		box-shadow: 10px 10px 5px rgba(0, 0, 0, .24)
-	}
-
-	body {
-		background: linear-gradient(#0f1115,#000000a1), url(../static/img/diag_stripe_grey1.png) !important;
-	}
-
-	.footer, .footer a {
-		color: #6d6d6d !important;
-	}
-
-	.footer a:hover {
-		color: #b5b5b5 !important;
-		text-decoration: none;
-	}
-	
-	a {
-		color: #6d6d6d !important;
-        text-decoration: none;
-	}
-	
-	a:hover {
-		color: #b5b5b5;
-	}
-    
+#leftFooterCustom {
+	position: absolute;
+	padding-top: 9px;
+	padding-right: 5px;
+	float: right;
+	vertical-align: middle;
 }
