@@ -6,13 +6,8 @@
 
 	$config['project_name'] = 'arcader';
 	$config['project_domain'] = $_SERVER['HTTP_HOST'];
-	$config['project_owner'] = 'author';
-	$config['project_discord'] = 'https://discord.gg/';
-	
-	//$config['project_name'] = 'arcader';
-	//$config['project_domain'] = 'spacemy.xyz';
-	//$config['project_owner'] = 'tydentlor';
-	//$config['project_discord'] = 'https://discord.gg/WjYeQNd';
+	$config['project_owner'] = 'tydentlor';
+	$config['project_discord'] = 'https://discord.gg/WjYeQNd';
 	
     // $config['database_host'] = 'localhost';
     // $config['database_database'] = 'arcader';
