@@ -2,6 +2,7 @@ body {
 	padding-top: 2em;
 	background: linear-gradient(#fefefe,#dccd7f87), url(/static/img/diag_stripe_grey1.png);
 	font-family: Trebuchet MS, Verdana, Arial, sans-serif;
+	background-attachment: fixed !important;
 }
 
 #inlineblock {
