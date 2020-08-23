@@ -1,0 +1,60 @@
+#pfp {
+	border: 1px solid black;
+}
+
+.container::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.leftHalf {
+    float: left;
+    width: calc(40% - 20px);
+}
+
+.rightHalf {
+    float: right;
+    width: calc(60% - 20px);
+}
+
+#userInfo {
+	color: white;
+	padding: 10px;
+	border-radius: 7px;
+	width: 290px;
+	background-color: #dac077;
+}
+
+#sectionPadding { 
+	padding-left: 55px; 
+}
+
+#userInfo hr {
+	border-bottom: 1px solid #c9a53b;
+}
+
+.topSection {
+	background-color: #AE995F;
+	padding: 5px;
+	margin: -5px;
+	border-bottom: 1px solid black;
+}
+
+.section a {
+	text-decoration: none;
+	color: white;
+}
+
+.section a:hover {
+	text-decoration: underline;
+	color: #DCDCDC;
+}
+
+
+.section {
+	padding: 5px;
+	border-radius: 5px;
+	background-color: #dac077;
+	color: white;
+}

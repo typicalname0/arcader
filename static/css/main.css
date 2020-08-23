@@ -1,18 +1,19 @@
 body {
 	padding-top: 2em;
-	background: linear-gradient(#fefefe,#dccd7f87), url(../img/diag_stripe_grey1.png);
+	background: linear-gradient(#fefefe,#dccd7f87), url(/static/img/diag_stripe_grey1.png);
 	font-family: Trebuchet MS, Verdana, Arial, sans-serif;
-}
-
-html {
-	height: 100%;
 }
 
 h1 {
 	margin: 0px;
 }
 
+html {
+	height: 140%;
+}
+
 .container {
+	
 	word-wrap: break-word;
 	padding: 5px;
 	width: 776px;
@@ -29,6 +30,7 @@ h1 {
 .footer {
 	width: 776px;
 	margin: auto;
+	color: black; 
 }
 
 .headline {
