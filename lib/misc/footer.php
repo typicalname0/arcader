@@ -1,4 +1,4 @@
-<div class="footer" style="color: black;">
+<div class="footer" id="black">
 	<small>
 		<span id="leftFooterCustom" id="floatRight">
 			<?php echo $config['project_domain']; ?> 2020 - 2020.

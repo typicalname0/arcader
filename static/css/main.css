@@ -4,12 +4,27 @@ body {
 	font-family: Trebuchet MS, Verdana, Arial, sans-serif;
 }
 
+#inlineblock {
+	display: inline-block;
+}
+
+#headerthing {
+	padding-top: 9px;
+	padding-right: 5px;
+	vertical-align: middle;
+	float: right;
+}
+
 h1 {
 	margin: 0px;
 }
 
 html {
 	height: 140%;
+}
+
+#black {
+	color: black;
 }
 
 .container {

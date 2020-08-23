@@ -3,13 +3,33 @@
 require($_SERVER['DOCUMENT_ROOT'] . "/config.inc.php"); 
 require($_SERVER['DOCUMENT_ROOT'] . "/lib/conn.php");
 require($_SERVER['DOCUMENT_ROOT'] . "/lib/user.php");
+
+function generateRandomString($length = 10) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
+
+if(!isset($_GET['id'])) {
+	die("ID is not set.");
+} else {
+	$user = getUserFromId($_GET['id'], $conn);
+	$style = hash('sha256', $user['css']);
+	$style = base64_encode($style);
+}
+
+$captchaRS = generateRandomString();
 ?>
 <html>
 	<head>
-		<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' images.weserv.nl;">
+		<meta http-equiv="Content-Security-Policy" content="default-src 'self' *.google.com *.gstatic.com; img-src 'self' images.weserv.nl; style-src 'self' 'unsafe-inline';">
 		<title><?php echo $config['project_name']; ?> - profile</title>
 		<script src='https://www.google.com/recaptcha/api.js' async defer></script>
-        <script>function onLogin(token){ document.getElementById('submitform').submit(); }</script>
+        <script src="/onLogin.js"></script>
 		<link rel="stylesheet" href="/static/css/main.css">
 		<link rel="stylesheet" href="/static/css/profile.css">
 	</head>
@@ -17,12 +37,6 @@ require($_SERVER['DOCUMENT_ROOT'] . "/lib/user.php");
 		<div class="container">
 			<?php
 				require($_SERVER['DOCUMENT_ROOT'] . "/lib/misc/header.php");
-				
-				if(!isset($_GET['id'])) {
-					die("ID is not set.");
-				} else {
-					$user = getUserFromId($_GET['id'], $conn);
-				}
 				
 				if($_SERVER['REQUEST_METHOD'] == 'POST') {
 					if(!isset($_SESSION['user'])){ $error = "you are not logged in"; goto skipcomment; }
@@ -40,14 +54,12 @@ require($_SERVER['DOCUMENT_ROOT'] . "/lib/user.php");
 				}
 			?><br>
 			
-			<style>
-				<?php echo $user['css']; ?>
-			</style>
+			<style><?php echo $user['css']; ?></style>
 			
 			<div class="leftHalf">
 				<div id="userInfo">
 					<h1><?php echo $user['username']; ?></h1><br>
-					<img id="pfp" style="width: 268px;height: 268px;" src="/dynamic/pfp/<?php echo $user['pfp']; ?>"><br>
+					<img id="pfp" src="/dynamic/pfp/<?php echo $user['pfp']; ?>"><br>
 					<audio autoplay controls>
 						<source src="/dynamic/song/<?php echo $user['music']; ?>">
 					</audio><br>
@@ -66,7 +78,7 @@ require($_SERVER['DOCUMENT_ROOT'] . "/lib/user.php");
 						<img src="/static/img/silk/table.png"> <b>Latest News</b> — <a href="viewmore?id=<?php echo (int)$_GET['id']; ?>">View More</a>
 					</div><br>
 					<?php $news = getLatestItem('news', 'username', $user['username'], $conn); if($news == "Item doesnt exist.") { echo "This user has no news."; } else {?>
-					<img id="commentPFP" style="position: absolute; height: 50px;" src="/dynamic/pfp/<?php echo getPFP($news['author'], $conn)?>">
+					<img id="commentPFP" src="/dynamic/pfp/<?php echo getPFP($news['author'], $conn)?>">
 						<span id="sectionPadding"><a href="reply?id=<?php echo $news['id']; ?>"><b><?php echo $news['title']; ?></b></a><br></span>
 						<span id="sectionPadding"><?php echo $news['author']; ?> — <?php echo $news['date']; ?><br></span><br><?php echo $news['extrainfo']; ?>
 					<br><?php } ?>
@@ -76,7 +88,7 @@ require($_SERVER['DOCUMENT_ROOT'] . "/lib/user.php");
 						<img src="/static/img/silk/controller.png"> <b>Latest Games</b> — <a href="viewmore?id=<?php echo (int)$_GET['id']; ?>">View More</a>
 					</div><br>
 					<?php $games = getLatestItem('game', 'username', $user['username'], $conn); if($games == "Item doesnt exist.") { echo "This user has no games."; } else {?>
-					<img id="commentPFP" style="position: absolute; height: 50px;" src="/dynamic/pfp/<?php echo getPFP($games['author'], $conn)?>">
+					<img id="commentPFP" src="/dynamic/pfp/<?php echo getPFP($games['author'], $conn)?>">
 						<span id="sectionPadding"><a href="reply?id=<?php echo $games['id']; ?>"><b><?php echo $games['title']; ?></b></a><br></span>
 						<span id="sectionPadding"><?php echo $games['author']; ?> — <?php echo $games['date']; ?><br></span><br><?php echo $games['extrainfo']; ?>
 						<br><br>
@@ -92,7 +104,7 @@ require($_SERVER['DOCUMENT_ROOT'] . "/lib/user.php");
 						<img src="/static/img/silk/television.png"> <b>Latest Videos</b> — <a href="viewmore?id=<?php echo (int)$_GET['id']; ?>">View More</a>
 					</div><br>
 					<?php $video = getLatestItem('video', 'username', $user['username'], $conn); if($video == "Item doesnt exist.") { echo "This user has no video."; } else {?>
-					<img id="commentPFP" style="position: absolute; height: 50px;" src="/dynamic/pfp/<?php echo getPFP($video['author'], $conn)?>">
+					<img id="commentPFP" src="/dynamic/pfp/<?php echo getPFP($video['author'], $conn)?>">
 						<span id="sectionPadding"><a href="reply?id=<?php echo $video['id']; ?>"><b><?php echo $video['title']; ?></b></a><br></span>
 						<span id="sectionPadding"><?php echo $video['author']; ?> — <?php echo $video['date']; ?><br></span><br><?php echo $video['extrainfo']; ?>
 						<br><br>
@@ -134,7 +146,7 @@ require($_SERVER['DOCUMENT_ROOT'] . "/lib/user.php");
 				
 				if($result->num_rows === 0) return('Item doesnt exist.');
 				while($row = $result->fetch_assoc()) { ?>
-				<div class="section" style="padding-bottom: 5px;">
+				<div class="section">
 					<div class="topSection">
 						<b>comment</b>
 					</div><br>

@@ -42,7 +42,7 @@ require($_SERVER['DOCUMENT_ROOT'] . "/lib/user.php");
 				<div class="topSection">
 					<b><?php echo $games['type']; ?></b>
 				</div><br>
-				<img id="pfp" style="position: absolute; height: 50px;" src="/dynamic/pfp/<?php echo getPFP($games['author'], $conn)?>">
+				<img id="commentPFP" style="position: absolute; height: 50px;" src="/dynamic/pfp/<?php echo getPFP($games['author'], $conn)?>">
 					<span id="sectionPadding"><a href="reply?id=<?php echo $games['id']; ?>"><b><?php echo $games['title']; ?></b></a><br></span>
 					<span id="sectionPadding"><?php echo $games['author']; ?> — <?php echo $games['date']; ?><br></span><br><?php echo $games['extrainfo']; ?>
 					<br><br>
@@ -55,8 +55,11 @@ require($_SERVER['DOCUMENT_ROOT'] . "/lib/user.php");
 						</object>
 						<?php } else if($games['type'] == "news") {} else if($games['type'] == "image") {?>
 							<img style="width: 321px; height: 302px;" src="/dynamic/image/<?php echo $games['filename']; ?>">
+						<?php } else {?>
+							<video width="440" height="300" controls>
+								<source src="/dynamic/video/<?php echo $games['filename']; ?>">
+							</video> 
 						<?php } ?>
-
 					</center>
 				<br><?php } ?>
 			</div><br>
@@ -87,7 +90,7 @@ require($_SERVER['DOCUMENT_ROOT'] . "/lib/user.php");
 				<div class="topSection">
 					<b>comment</b>
 				</div><br>
-					<img id="pfp" style="position: absolute; height: 50px;" src="/dynamic/pfp/<?php echo getPFP($row['author'], $conn)?>">
+					<img id="commentPFP" style="position: absolute; height: 50px;" src="/dynamic/pfp/<?php echo getPFP($row['author'], $conn)?>">
 					<span id="sectionPadding"><b><a href="profile?id=<?php echo getID($row['author'], $conn); ?>"><?php echo $row['author']; ?></a></b> — <?php echo $row['date']; ?></span><br>
 					<span id="sectionPadding"><?php echo $row['rating']; ?>/10<br></span><br>
 					<?php echo $row['text']; ?>
