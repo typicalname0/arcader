@@ -58,3 +58,19 @@
 	background-color: #dac077;
 	color: white;
 }
+
+#pfp {
+	width: 268px;
+	height: 268px;
+}
+
+#commentPFP {
+	position: absolute;
+	height: 50px;
+	width: 50px;
+}
+
+#containerImage {
+	width: 200px;
+	height: 200px;
+}

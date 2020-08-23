@@ -6,7 +6,7 @@ require($_SERVER['DOCUMENT_ROOT'] . "/lib/user.php");
 ?>
 <html>
 	<head>
-		<meta http-equiv="Content-Security-Policy" content="img-src 'self'">
+		<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' images.weserv.nl;">
 		<title><?php echo $config['project_name']; ?> - profile</title>
 		<script src='https://www.google.com/recaptcha/api.js' async defer></script>
         <script>function onLogin(token){ document.getElementById('submitform').submit(); }</script>
@@ -66,7 +66,7 @@ require($_SERVER['DOCUMENT_ROOT'] . "/lib/user.php");
 						<img src="/static/img/silk/table.png"> <b>Latest News</b> — <a href="viewmore?id=<?php echo (int)$_GET['id']; ?>">View More</a>
 					</div><br>
 					<?php $news = getLatestItem('news', 'username', $user['username'], $conn); if($news == "Item doesnt exist.") { echo "This user has no news."; } else {?>
-					<img id="pfp" style="position: absolute; height: 50px;" src="/dynamic/pfp/<?php echo getPFP($news['author'], $conn)?>">
+					<img id="commentPFP" style="position: absolute; height: 50px;" src="/dynamic/pfp/<?php echo getPFP($news['author'], $conn)?>">
 						<span id="sectionPadding"><a href="reply?id=<?php echo $news['id']; ?>"><b><?php echo $news['title']; ?></b></a><br></span>
 						<span id="sectionPadding"><?php echo $news['author']; ?> — <?php echo $news['date']; ?><br></span><br><?php echo $news['extrainfo']; ?>
 					<br><?php } ?>
@@ -76,7 +76,7 @@ require($_SERVER['DOCUMENT_ROOT'] . "/lib/user.php");
 						<img src="/static/img/silk/controller.png"> <b>Latest Games</b> — <a href="viewmore?id=<?php echo (int)$_GET['id']; ?>">View More</a>
 					</div><br>
 					<?php $games = getLatestItem('game', 'username', $user['username'], $conn); if($games == "Item doesnt exist.") { echo "This user has no games."; } else {?>
-					<img id="pfp" style="position: absolute; height: 50px;" src="/dynamic/pfp/<?php echo getPFP($games['author'], $conn)?>">
+					<img id="commentPFP" style="position: absolute; height: 50px;" src="/dynamic/pfp/<?php echo getPFP($games['author'], $conn)?>">
 						<span id="sectionPadding"><a href="reply?id=<?php echo $games['id']; ?>"><b><?php echo $games['title']; ?></b></a><br></span>
 						<span id="sectionPadding"><?php echo $games['author']; ?> — <?php echo $games['date']; ?><br></span><br><?php echo $games['extrainfo']; ?>
 						<br><br>
@@ -92,7 +92,7 @@ require($_SERVER['DOCUMENT_ROOT'] . "/lib/user.php");
 						<img src="/static/img/silk/television.png"> <b>Latest Videos</b> — <a href="viewmore?id=<?php echo (int)$_GET['id']; ?>">View More</a>
 					</div><br>
 					<?php $video = getLatestItem('video', 'username', $user['username'], $conn); if($video == "Item doesnt exist.") { echo "This user has no video."; } else {?>
-					<img id="pfp" style="position: absolute; height: 50px;" src="/dynamic/pfp/<?php echo getPFP($video['author'], $conn)?>">
+					<img id="commentPFP" style="position: absolute; height: 50px;" src="/dynamic/pfp/<?php echo getPFP($video['author'], $conn)?>">
 						<span id="sectionPadding"><a href="reply?id=<?php echo $video['id']; ?>"><b><?php echo $video['title']; ?></b></a><br></span>
 						<span id="sectionPadding"><?php echo $video['author']; ?> — <?php echo $video['date']; ?><br></span><br><?php echo $video['extrainfo']; ?>
 						<br><br>
@@ -106,15 +106,15 @@ require($_SERVER['DOCUMENT_ROOT'] . "/lib/user.php");
 						<img src="/static/img/silk/image.png"> <b>Latest Images</b> — <a href="viewmore?id=<?php echo (int)$_GET['id']; ?>">View More</a>
 					</div><br>
 					<?php $image = getLatestItem('image', 'username', $user['username'], $conn); if($image == "Item doesnt exist.") { echo "This user has no image."; } else {?>
-					<img id="pfp" style="position: absolute; height: 50px;" src="/dynamic/pfp/<?php echo getPFP($image['author'], $conn)?>">
+					<img id="commentPFP" src="/dynamic/pfp/<?php echo getPFP($image['author'], $conn)?>">
 						<span id="sectionPadding"><a href="reply?id=<?php echo $image['id']; ?>"><b><?php echo $image['title']; ?></b></a><br></span>
 						<span id="sectionPadding"><?php echo $image['author']; ?> — <?php echo $image['date']; ?><br></span><br><?php echo $image['extrainfo']; ?>
 						<br><br>
-						<img style="width: 200px; height: 200px;" src="/dynamic/image/<?php echo $image['filename']; ?>"> 
+						<img id="containerImage" src="/dynamic/image/<?php echo $image['filename']; ?>"> 
 					<br><?php } ?>
 				</div><br>
 				
-				<div class="section" style="padding-bottom: 5px;">
+				<div class="section">
 					<div class="topSection">
 						<b>reply</b>
 					</div><br>
@@ -138,7 +138,7 @@ require($_SERVER['DOCUMENT_ROOT'] . "/lib/user.php");
 					<div class="topSection">
 						<b>comment</b>
 					</div><br>
-						<img id="pfp" style="position: absolute; height: 50px;" src="/dynamic/pfp/<?php echo getPFP($row['author'], $conn)?>">
+						<img id="commentPFP" src="/dynamic/pfp/<?php echo getPFP($row['author'], $conn)?>">
 						<span id="sectionPadding"><b><a href="profile?id=<?php echo getID($row['author'], $conn); ?>"><?php echo $row['author']; ?></a></b> — <?php echo $row['date']; ?></span><br>
 						<br><br>
 						<?php echo $row['text']; ?>
