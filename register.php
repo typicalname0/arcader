@@ -45,7 +45,7 @@ require($_SERVER['DOCUMENT_ROOT'] . "/lib/register.php");
 				
 			?>
 			<h1>register</h1>
-			fill in the form below to become a member of SpaceMy.xyz.<br><br>
+			fill in the form below to become a member of <?php echo $config['project_name']; ?>.<br><br>
 			<form method="post" id="submitform">
 				<fieldset>
 					<?php if(isset($error)) { echo "<small style='color:red'>" . $error . "</small>"; } ?><br>
