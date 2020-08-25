@@ -24,6 +24,15 @@ function getUserFromId($id, $connection) {
 	return $userResult;
 }
 
+function validateMarkdown($comment) {
+	$comment = htmlspecialchars($comment);
+	$Parsedown = new Parsedown();
+	$Parsedown->setSafeMode(true);
+
+	return $Parsedown->line($comment);
+}
+
+
 function getUserFromUsername($username, $connection) {
 	$userResult = array();
 	$stmt = $connection->prepare("SELECT * FROM users WHERE username = ?");
@@ -61,6 +70,21 @@ function getPFP($user, $connection) {
 	$stmt->close();
 	return $pfp;
 }
+
+
+function getBobux($user, $connection) {
+	$stmt = $connection->prepare("SELECT * FROM users WHERE username = ?");
+	$stmt->bind_param("s", $user);
+	$stmt->execute();
+	$result = $stmt->get_result();
+	if($result->num_rows === 0) return('error');
+	while($row = $result->fetch_assoc()) {
+		$bobux = $row['bobux'];
+	} 
+	$stmt->close();
+	return $bobux;
+}
+
 
 function getLatestItem($itemType, $type, $username, $connection) {
 	$itemResult = array();
@@ -107,6 +131,19 @@ function getID($user, $connection) {
 	return $id;
 }
 
+function getFans($user, $connection) {
+	$stmt = $connection->prepare("SELECT * FROM fan WHERE following = ?");
+	$stmt->bind_param("s", $user);
+	$stmt->execute();
+	$result = $stmt->get_result();
+	$fans = 0;
+	while($row = $result->fetch_assoc()) {
+		$fans++;
+	} 
+	$stmt->close();
+	return $fans;
+}
+
 function getItem($id, $connection) {
 	$itemResult = array();
 	$stmt = $connection->prepare("SELECT * FROM files WHERE id = ? AND status = 'y'");
@@ -131,6 +168,20 @@ function getItem($id, $connection) {
 
 	return $itemResult;
 }
+
+function getName($id, $connection) {
+	$stmt = $connection->prepare("SELECT * FROM users WHERE id = ?");
+	$stmt->bind_param("s", $id);
+	$stmt->execute();
+	$result = $stmt->get_result();
+	if($result->num_rows === 0) return('error');
+	while($row = $result->fetch_assoc()) {
+		$name = htmlspecialchars($row['username']);
+	} 
+	$stmt->close();
+	return $name;
+}
+
 
 function validateCSS($validate) {
 	$DISALLOWED = array("<?php", "?>", "behavior: url", ".php", "@import", "@\import", "@/import"); 

@@ -3,6 +3,7 @@
 require($_SERVER['DOCUMENT_ROOT'] . "/config.inc.php"); 
 require($_SERVER['DOCUMENT_ROOT'] . "/lib/conn.php");
 require($_SERVER['DOCUMENT_ROOT'] . "/lib/user.php");
+require($_SERVER['DOCUMENT_ROOT'] . "/vendor/autoload.php");
 ?>
 <html>
 	<head>
@@ -48,7 +49,7 @@ require($_SERVER['DOCUMENT_ROOT'] . "/lib/user.php");
 					<br><br>
 					<center>
 						<?php if($games['type'] == "game") {?>
-						<object width="450" height="400">
+						<object width="640" height="480">
 							<param name="movie" value="/dynamic/game/<?php echo $games['filename']; ?>">
 							<embed src="/dynamic/game/<?php echo $games['filename']; ?>" width="640" height="480">
 							</embed>
@@ -79,7 +80,7 @@ require($_SERVER['DOCUMENT_ROOT'] . "/lib/user.php");
 			</div><br>
 			
 			<?php
-			$stmt = $conn->prepare("SELECT * FROM comments WHERE toid = ? ORDER BY id DESC");
+			$stmt = $conn->prepare("SELECT * FROM comments WHERE toid = ?");
 			$stmt->bind_param("i", $_GET['id']);
 			$stmt->execute();
 			$result = $stmt->get_result();
@@ -93,7 +94,7 @@ require($_SERVER['DOCUMENT_ROOT'] . "/lib/user.php");
 					<img id="commentPFP" style="position: absolute; height: 50px;" src="/dynamic/pfp/<?php echo getPFP($row['author'], $conn)?>">
 					<span id="sectionPadding"><b><a href="profile?id=<?php echo getID($row['author'], $conn); ?>"><?php echo $row['author']; ?></a></b> — <?php echo $row['date']; ?></span><br>
 					<span id="sectionPadding"><?php echo $row['rating']; ?>/10<br></span><br>
-					<?php echo $row['text']; ?>
+					<?php echo str_replace(PHP_EOL, "<br>", validateMarkdown($row['text'])); ?>
 				<br>
 			</div><br>
 			<?php } ?>

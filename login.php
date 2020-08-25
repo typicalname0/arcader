@@ -3,6 +3,7 @@
 require($_SERVER['DOCUMENT_ROOT'] . "/config.inc.php");
 require($_SERVER['DOCUMENT_ROOT'] . "/lib/conn.php");
 require($_SERVER['DOCUMENT_ROOT'] . "/lib/login.php");
+require($_SERVER['DOCUMENT_ROOT'] . "/lib/user.php");
 ?>
 <html>
 	<head>

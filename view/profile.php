@@ -3,6 +3,7 @@
 require($_SERVER['DOCUMENT_ROOT'] . "/config.inc.php"); 
 require($_SERVER['DOCUMENT_ROOT'] . "/lib/conn.php");
 require($_SERVER['DOCUMENT_ROOT'] . "/lib/user.php");
+require($_SERVER['DOCUMENT_ROOT'] . "/vendor/autoload.php");
 
 function generateRandomString($length = 10) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -63,12 +64,14 @@ $captchaRS = generateRandomString();
 					<audio autoplay controls>
 						<source src="/dynamic/song/<?php echo $user['music']; ?>">
 					</audio><br>
-					<?php echo str_replace(PHP_EOL, "<br>", $user['bio']);?>
+					<?php echo str_replace(PHP_EOL, "<br>", validateMarkdown($user['bio']));?>
 					<hr>
 					<img src="/static/img/silk/house.png"> <b>Location: </b><?php echo $user['location']; ?><br>
 					<img src="/static/img/silk/user.png"> <b>Age: </b><?php echo $user['age']; ?><br>
 					<img src="/static/img/silk/brick.png"> <b>Gender: </b><?php echo $user['gender']; ?><br>
 					<img src="/static/img/silk/calendar.png"> <b>Joined On: </b><?php echo $user['date']; ?><br>
+					<img src="/static/img/silk/group.png"> <b>Fans: </b><?php echo getFans($user['username'], $conn); ?><br><br>
+					<center><a href="/addfan.php?id=<?php echo (int)$_GET['id']; ?>"><button>Add as Fan</button></a></center>
 				</div>
 			</div>
 			
@@ -153,7 +156,7 @@ $captchaRS = generateRandomString();
 						<img id="commentPFP" src="/dynamic/pfp/<?php echo getPFP($row['author'], $conn)?>">
 						<span id="sectionPadding"><b><a href="profile?id=<?php echo getID($row['author'], $conn); ?>"><?php echo $row['author']; ?></a></b> — <?php echo $row['date']; ?></span><br>
 						<br><br>
-						<?php echo $row['text']; ?>
+						<?php echo str_replace(PHP_EOL, "<br>", validateMarkdown($row['text'])); ?>
 					<br>
 				</div><br>
 				<?php } ?>
