@@ -69,6 +69,8 @@ $captchaRS = generateRandomString();
 						
 						<?php } else if($row['type'] == "news") {} else if($row['type'] == "image") {?>
 							<img style="width: 321px; height: 302px;" src="/dynamic/image/<?php echo $row['filename']; ?>">
+						<?php } else if($row['type'] == "art") {?>
+							<img style="width: 600px; height: 300px;" src="/dynamic/art/<?php echo $row['filename']; ?>">
 						<?php } else {?>
 							<video width="340" height="250" controls>
 								<source src="/dynamic/video/<?php echo $row['filename']; ?>">

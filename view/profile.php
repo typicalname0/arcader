@@ -128,6 +128,18 @@ $captchaRS = generateRandomString();
 						<img id="containerImage" src="/dynamic/image/<?php echo $image['filename']; ?>"> 
 					<br><?php } ?>
 				</div><br>
+				<div class="section">
+					<div class="topSection">
+						<img src="/static/img/silk/image.png"> <b>Latest Drawings</b> — <a href="viewmore?id=<?php echo (int)$_GET['id']; ?>">View More</a>
+					</div><br>
+					<?php $image = getLatestItem('art', 'username', $user['username'], $conn); if($image == "Item doesnt exist.") { echo "This user has no image."; } else {?>
+					<img id="commentPFP" src="/dynamic/pfp/<?php echo getPFP($image['author'], $conn)?>">
+						<span id="sectionPadding"><a href="reply?id=<?php echo $image['id']; ?>"><b><?php echo $image['title']; ?></b></a><br></span>
+						<span id="sectionPadding"><?php echo $image['author']; ?> — <?php echo $image['date']; ?><br></span><br><?php echo $image['extrainfo']; ?>
+						<br><br>
+						<img style="width: 350px; height: 170px;" src="/dynamic/art/<?php echo $image['filename']; ?>"> 
+					<br><?php } ?>
+				</div><br>
 				
 				<div class="section">
 					<div class="topSection">
