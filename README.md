@@ -11,6 +11,7 @@ a 4ground's rewrite and without a crappy backend/codebase
 - composer (latest)
 - mysqli
 ## how 2 install
+you also need the silk icon pack found [here](http://www.famfamfam.com/lab/icons/silk/) and put it in /static/img/silk/
 ```
 cd /your/web/directory/
 git clone https://github.com/typicalname0/arcader.git
@@ -20,3 +21,8 @@ composer install
 we use the apache license
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftypicalname0%2Farcader.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftypicalname0%2Farcader?ref=badge_large)
+## credits
+- typicalname0: doing stuff
+- bloxxite: js
+- kscott: js
+- ezist: ?
