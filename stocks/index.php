@@ -3,13 +3,13 @@
 require($_SERVER['DOCUMENT_ROOT'] . "/config.inc.php"); 
 require($_SERVER['DOCUMENT_ROOT'] . "/lib/conn.php");
 require($_SERVER['DOCUMENT_ROOT'] . "/lib/user.php");
-require($_SERVER['DOCUMENT_ROOT'] . "/vendor/autoload.php");
 
 $tax = 0.04;
 ?>
 <html>
 	<head>
-		<title><?php echo $config['project_name']; ?> - profile</title>
+		<title><?php echo $config['project_name']; ?> - stocks</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src='https://www.google.com/recaptcha/api.js' async defer></script>
         <script>function onLogin(token){ document.getElementById('submitform').submit(); }</script>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -17,27 +17,30 @@ $tax = 0.04;
         google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(drawChart);
 
+        var chart;
+
         function drawChart() {
 
-            var data = google.visualization.arrayToDataTable([
-                ['User', 'Money'],
-                <?php
-                    $stmt = $conn->prepare("SELECT bobux, username FROM users");
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                
-                    while($row = $result->fetch_assoc()) { 
-                        echo "['" . $row['username'] . "', " . $row['bobux'] . "]," . PHP_EOL;
-                    }
-                ?>
-                ['',     0]
-            ]);
+            chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+            refChart();
+        }
+
+        function refChart() {
+
+            var dataArray;
+
+            $.get( "test.php", function( jsonData ) {
+                console.log(jsonData);
+                dataArray = json_decode(jsonData);
+            });
+            console.log(dataArray);
+
+            var data = google.visualization.arrayToDataTable(dataArray);
 
             var options = {
                 title: 'Cash'
             };
-
-            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
             chart.draw(data, options);
         }
