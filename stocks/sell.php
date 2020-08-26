@@ -50,7 +50,7 @@ if(isset($_SESSION['user']) && isset($_GET['id'])) {
     $stmt->execute();
     $stmt->close();
 
-    webhookSend("", $name . " has sold " . $stockAmount . " of " . $stockName, "Stock Sold");
+    webhookSend($config['discord_webhook'], $name . " has sold " . $stockAmount . " of " . $stockName, "Stock Sold");
 
     header("Location: index.php");
 } else {

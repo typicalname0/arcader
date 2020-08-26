@@ -16,6 +16,7 @@
 		error_reporting(E_ALL);
 	}
 
-    $config['recaptcha_secret'] = '';
-    $config['recaptcha_sitekey'] = '';    
+        $config['recaptcha_secret'] = '';
+	$config['recaptcha_sitekey'] = '';    
+	$config['discord_webhook'] = '';
 ?>
