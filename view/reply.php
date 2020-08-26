@@ -56,6 +56,8 @@ require($_SERVER['DOCUMENT_ROOT'] . "/vendor/autoload.php");
 						</object>
 						<?php } else if($games['type'] == "news") {} else if($games['type'] == "image") {?>
 							<img style="width: 321px; height: 302px;" src="/dynamic/image/<?php echo $games['filename']; ?>">
+						<?php } else if($games['type'] == "art") {?>
+							<img style="width: 600px; height: 300px;" src="/dynamic/art/<?php echo $games['filename']; ?>">
 						<?php } else {?>
 							<video width="440" height="300" controls>
 								<source src="/dynamic/video/<?php echo $games['filename']; ?>">

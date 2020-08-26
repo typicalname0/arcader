@@ -4,6 +4,10 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 session_start();
+
+$filter = array("@everyone", "@here");
+$name = str_replace($filter, "", $_SESSION['user']);
+
 require($_SERVER['DOCUMENT_ROOT'] . "/config.inc.php"); 
 require($_SERVER['DOCUMENT_ROOT'] . "/lib/conn.php");
 require($_SERVER['DOCUMENT_ROOT'] . "/lib/user.php");
@@ -23,12 +27,17 @@ if(isset($_SESSION['user']) && isset($_GET['id'])) {
     $currentBobux = floatval(getBobux($_SESSION['user'], $conn));
     $stockAmount = (int)htmlspecialchars($amount);
     $stockPrice = getStockPrice($stockName, $conn);
+
+    if($stockPrice < 0) {
+        die("THIS STOCK HAS CRASHED!");
+    }
+
     $stockPrice = $stockPrice * ((rand(1, 5) / 85) + 1);
 
     if(checkIfOwnsStock($_SESSION['user'], $_GET['id'], $conn) != true) {
         die("You do not own this stock!");
     } 
-
+    
     $final = $currentBobux + ($stockAmount * $stockPrice);
 
     $stmt = $conn->prepare("UPDATE users SET bobux = ? WHERE username = ?");
@@ -41,7 +50,7 @@ if(isset($_SESSION['user']) && isset($_GET['id'])) {
     $stmt->execute();
     $stmt->close();
 
-    webhookSend("", $_SESSION['user'] . " has sold " . $stockAmount . " of " . $stockName, "Stock Sold");
+    webhookSend("", $name . " has sold " . $stockAmount . " of " . $stockName, "Stock Sold");
 
     header("Location: index.php");
 } else {

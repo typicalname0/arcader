@@ -42,6 +42,7 @@ require($_SERVER['DOCUMENT_ROOT'] . "/lib/user.php");
 			<a href="/new/video">Upload Video</a><br>
 			<a href="/new/image">Upload Image</a><br>
 			<a href="/new/news">New News</a><br>
+			<a href="/new/drawing">Draw</a><br>
 			<a href="/new/game">Upload Game</a><br><hr>
 			
 			Welcome to <b>Arcader.</b><br><br>You can reply to people's uploaded files, or customize your profile with custom CSS. We hope you have a good time here. <small>Our Discord is at the Contact Us button at the footer.</small>
@@ -68,6 +69,8 @@ require($_SERVER['DOCUMENT_ROOT'] . "/lib/user.php");
 							
 							<?php } else if($row['type'] == "news") {} else if($row['type'] == "image") {?>
 								<img style="width: 321px; height: 302px;" src="/dynamic/image/<?php echo $row['filename']; ?>">
+							<?php } else if($row['type'] == "art") {?>
+								<img style="width: 350px; height: 170px;" src="/dynamic/art/<?php echo $row['filename']; ?>">
 							<?php } else {?>
 								<video width="340" height="250" controls>
 									<source src="/dynamic/video/<?php echo $row['filename']; ?>">
