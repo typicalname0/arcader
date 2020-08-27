@@ -39,11 +39,16 @@ require($_SERVER['DOCUMENT_ROOT'] . "/lib/user.php");
 				require($_SERVER['DOCUMENT_ROOT'] . "/lib/misc/header.php");
 			?><br>
 			<h1>front-page</h1>
-			<a href="/new/video">Upload Video</a><br>
-			<a href="/new/image">Upload Image</a><br>
-			<a href="/new/news">New News</a><br>
-			<a href="/new/drawing">Draw</a><br>
-			<a href="/new/game">Upload Game</a><br><hr>
+
+			<?php
+				if (!isset($_SESSION['user'])) { ?>
+					<a href="/new/video">Upload Video</a><br>
+					<a href="/new/image">Upload Image</a><br>
+					<a href="/new/news">New News</a><br>
+					<a href="/new/drawing">Draw</a><br>
+					<a href="/new/game">Upload Game</a><br><hr>
+				<?php }
+			?>
 			
 			Welcome to <b>Arcader.</b><br><br>You can reply to people's uploaded files, or customize your profile with custom CSS. We hope you have a good time here. <small>Our Discord is at the Contact Us button at the footer.</small>
 			<br><br>
