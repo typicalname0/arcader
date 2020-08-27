@@ -721,7 +721,7 @@ function file_publish(){
 		// Publish to Arcader
 		$.ajax({
 			type: 'POST',
-			url: '/new/handleart.php',
+			url: '/new/handleArt.php',
 			data: {
 				drawing: canvas.toDataURL()
 			},
