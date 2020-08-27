@@ -11,6 +11,7 @@ require($_SERVER['DOCUMENT_ROOT'] . "/config.inc.php");
 require($_SERVER['DOCUMENT_ROOT'] . "/lib/conn.php");
 require($_SERVER['DOCUMENT_ROOT'] . "/lib/user.php");
 require($_SERVER['DOCUMENT_ROOT'] . "/lib/stocks.php");
+
 if(isset($_SESSION['user']) && isset($_GET['name']) && isset($_GET['amount'])) {
     $currentBobux = floatval(getBobux($_SESSION['user'], $conn));
     $stockName = htmlspecialchars($_GET['name']);

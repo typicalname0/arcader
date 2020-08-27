@@ -3,13 +3,12 @@
 require($_SERVER['DOCUMENT_ROOT'] . "/config.inc.php"); 
 require($_SERVER['DOCUMENT_ROOT'] . "/lib/conn.php");
 require($_SERVER['DOCUMENT_ROOT'] . "/lib/user.php");
-require($_SERVER['DOCUMENT_ROOT'] . "/vendor/autoload.php");
 
 $tax = 0.04;
 ?>
 <html>
 	<head>
-		<title><?php echo $config['project_name']; ?> - profile</title>
+		<title><?php echo $config['project_name']; ?> - stocks</title>
 		<script src='https://www.google.com/recaptcha/api.js' async defer></script>
         <script>function onLogin(token){ document.getElementById('submitform').submit(); }</script>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -17,29 +16,47 @@ $tax = 0.04;
         google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(drawChart);
 
+        var chart;
+
         function drawChart() {
 
-            var data = google.visualization.arrayToDataTable([
-                ['User', 'Money'],
-                <?php
-                    $stmt = $conn->prepare("SELECT bobux, username FROM users");
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                
-                    while($row = $result->fetch_assoc()) { 
-                        echo "['" . $row['username'] . "', " . $row['bobux'] . "]," . PHP_EOL;
+            chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+            refChart();
+        }
+
+        function refChart() {
+            var xmlhttp;
+
+            if (window.XMLHttpRequest) {
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var dataArray = new Array();
+                    var jsonData = JSON.parse(this.responseText);
+                    for(var i in jsonData){
+                        dataArray.push([i,jsonData[i]]);
                     }
-                ?>
-                ['',     0]
-            ]);
 
-            var options = {
-                title: 'Cash'
-            };
+                    var data = google.visualization.arrayToDataTable(dataArray);
 
-            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                    var options = {
+                        title: 'Cash'
+                    };
 
-            chart.draw(data, options);
+                    chart.draw(data, options);
+                }
+            }
+
+            xmlhttp.open("get", "/stocks/api/investors.php");
+            xmlhttp.send();
+
+            setTimeout(()=>{
+                refChart();
+            },10000)
         }
         </script>
 
@@ -70,7 +87,7 @@ $tax = 0.04;
             ?>
             <hr>
             <br>You have <?php if(isset($_SESSION['user'])) { echo "<b>" . getBobux($_SESSION['user'], $conn) . "</b> Bobux"; } else { echo "Not Logged in"; } ?><br><b>Current Tax Rate:</b> <?php echo $tax; ?> * Price of Stock<br>
-            You must input their corperate name, for example: BBUX = Bobux Inc.<br><br>
+            You must input their corporate name, for example: BBUX = Bobux Inc.<br><br>
             <?php 
                 $stmt = $conn->prepare("SELECT * FROM stocknames");
                 $stmt->execute();
@@ -78,7 +95,7 @@ $tax = 0.04;
             
                 while($row = $result->fetch_assoc()) { 
                     $finalTax = $row['price'] * $tax;
-                    echo '<b>[' . $row['coname'] . '] ' . $row['name'] . '</b> <b>[' . $row['price'] . ' <img src="/static/img/silk/money.png"> + ' . $finalTax . ' <img src="/static/img/silk/money.png">]</b><br>';
+                    echo '<b>[' . $row['coname'] . '] ' . $row['name'] . '[' . $row['price'] . ' <img src="/static/img/silk/money.png"> + ' . $finalTax . ' <img src="/static/img/silk/money.png">]</b><br>';
                 }
             ?>
             <hr>
