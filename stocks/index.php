@@ -9,7 +9,7 @@ $tax = 0.04;
 ?>
 <html>
 	<head>
-		<title><?php echo $config['project_name']; ?> - profile</title>
+		<title><?php echo $config['project_name']; ?> - stocks</title>
 		<script src='https://www.google.com/recaptcha/api.js' async defer></script>
         <script>function onLogin(token){ document.getElementById('submitform').submit(); }</script>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
